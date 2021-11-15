@@ -2,8 +2,10 @@ package com.challenge.arturoisidro.RockPaperScissorsGame.service;
 
 public interface GameService {
 	
-	String realizarJugada(String opcionElegida);
-	void resetJugada();
-	int pcJuegada();
+	String startGame(String opcionElegida);
+	void resetGame();
+	int pcPlay();
+	int counterRockGames();
+	int counterRandomGames();
 
 }
