@@ -2,21 +2,21 @@ package com.challenge.arturoisidro.RockPaperScissorsGame.model;
 
 public class Resultado {
 
-	private Jugador player1;
-	private Jugador player2;
+	private Jugador you_choose;
+	private Jugador pc_choose;
 	private String resultado;
 	
-	public Jugador getPlayer1() {
-		return player1;
+	public Jugador getYou_choose() {
+		return you_choose;
 	}
-	public void setPlayer1(Jugador player1) {
-		this.player1 = player1;
+	public void setYou_choose(Jugador you_choose) {
+		this.you_choose = you_choose;
 	}
-	public Jugador getPlayer2() {
-		return player2;
+	public Jugador getPc_choose() {
+		return pc_choose;
 	}
-	public void setPlayer2(Jugador player2) {
-		this.player2 = player2;
+	public void setPc_choose(Jugador pc_choose) {
+		this.pc_choose = pc_choose;
 	}
 	public String getResultado() {
 		return resultado;
@@ -24,5 +24,7 @@ public class Resultado {
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
 	}
+	
+
 	
 }
