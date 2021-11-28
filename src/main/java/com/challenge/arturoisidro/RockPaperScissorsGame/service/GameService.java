@@ -42,7 +42,15 @@ public interface GameService {
 	 */
 	int totalGames();
 	
+	/**
+	 * Count  number of winning first player
+	 * @return number of victories player 1
+	 */
 	int counterPlayerFirstWin();
+	/**
+	 * Count  number of winning second player
+	 * @return number of victories player 2
+	 */
 	int counterPlayerSecondWin();
 	int counterDraw();
 	List<GameResult>getResults();
