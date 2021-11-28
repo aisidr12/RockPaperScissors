@@ -3,6 +3,7 @@ package com.challenge.arturoisidro.RockPaperScissorsGame.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.challenge.arturoisidro.RockPaperScissorsGame.Exception.OptionNotFoundException;
 import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 import com.challenge.arturoisidro.RockPaperScissorsGame.service.GameService;
 
@@ -25,11 +27,14 @@ public class GameController {
 	@PostMapping("/jugar/{opcion}")
 	@ApiOperation(value = "Starting the game 0- Random : 1-  Rock options", notes = "show information about the gameplay choosing and option")
 	public ResponseEntity<GameResult> realizarJugada(@PathVariable("opcion") String opcionElegida) {
-		GameResult startGame = gameService.startGame(opcionElegida);
-		if (startGame != null) {
+		GameResult startGame;
+		try {
+			startGame = gameService.startGame(opcionElegida);
 			return ResponseEntity.ok(startGame);
+		} catch (OptionNotFoundException e) {
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return (ResponseEntity<GameResult>) ResponseEntity.badRequest();
 	}
 
 	@PostMapping("/reset")
@@ -63,7 +68,7 @@ public class GameController {
 	public ResponseEntity<Integer> cargarPuntosRandom() {
 		return ResponseEntity.ok().body(gameService.counterPlayerSecondWin());
 	}
-	
+
 	@GetMapping("/totalDraw")
 	@ApiOperation(value = "Show number of Random points ", notes = "Show number of Random points")
 	public ResponseEntity<Integer> cargarDraw() {

@@ -2,6 +2,7 @@ package com.challenge.arturoisidro.RockPaperScissorsGame.service;
 
 import java.util.List;
 
+import com.challenge.arturoisidro.RockPaperScissorsGame.Exception.OptionNotFoundException;
 import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 
 public interface GameService {
@@ -9,8 +10,9 @@ public interface GameService {
 	 * Start the game playing with a user Selection
 	 * @param opcionElegida Could be 0 - random  1 - rock option
 	 * @return Information of the match
+	 * @throws OptionNotFoundException 
 	 */
-	GameResult startGame(String opcionElegida);
+	GameResult startGame(String opcionElegida) throws OptionNotFoundException;
 	
 	/***
 	 * Reset the game, counter to 0 and clear memory

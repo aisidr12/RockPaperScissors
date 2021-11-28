@@ -8,12 +8,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.challenge.arturoisidro.RockPaperScissorsGame.Exception.OptionNotFoundException;
 import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 import com.challenge.arturoisidro.RockPaperScissorsGame.service.GameService;
 
 @Service
 public class GameServiceImpl implements GameService {
+	
+	//TODO think about create a map into let multiple users use the game
 	Log log = LogFactory.getLog(GameServiceImpl.class);
+	private final  String ROCK = "ROCK";
+	private final  String PAPER = "PAPER";
+	private final  String SCISSOR = "SCISSOR";
+	private final  String DRAW = "DRAW";
 	private List<GameResult> gameSession = new ArrayList<GameResult>();
 	private final String ROCK_OPTION = "1";
 	private int counter_random = 0;
@@ -21,15 +28,18 @@ public class GameServiceImpl implements GameService {
 	private int victoriasPrimerJugador = 1;
 	private int victoriasSegundoJugador = 1;
 	private int numperoEmpates = 1;
-	private final  String ROCK = "ROCK";
-	private final  String PAPER = "PAPER";
-	private final  String SCISSOR = "SCISSOR";
-	private final  String DRAW = "DRAW";
+
 
 
 	
 	@Override
-	public GameResult startGame(String opcionElegida) {
+	public GameResult startGame(String opcionElegida) throws OptionNotFoundException {
+		if(opcionElegida.isEmpty())
+			throw new OptionNotFoundException("Option cannot be empty");
+		
+		if(!("0".equals(opcionElegida)) && !(ROCK_OPTION.equals(opcionElegida)))
+			throw new OptionNotFoundException("Option not found");
+
 		log.info("Empezando el juego con la eleccion elegida " + opcionElegida);
 		if (ROCK_OPTION.equals(opcionElegida)) {  //1 Cuando elige el radio de solo piedra
 			log.info("Dentro de la opcion Siempre piedra");			

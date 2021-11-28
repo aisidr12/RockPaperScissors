@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import com.challenge.arturoisidro.RockPaperScissorsGame.Exception.OptionNotFoundException;
 import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 
 class GameServiceImplTest {
@@ -16,20 +17,36 @@ class GameServiceImplTest {
 	@Test
 	void selecctionPlayerOneRandom() {
 		String randomSelection = "0";
-		GameResult startGame = service.startGame(randomSelection);
+		try {
+			GameResult startGame = service.startGame(randomSelection);
+		} catch (OptionNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals(1,service.counterRandomGames());	
 	}
 	@Test
 	void selecctionRockGame() {
 		String randomSelection = "1";
-		GameResult startGame = service.startGame(randomSelection);
+		try {
+			GameResult startGame = service.startGame(randomSelection);
+		} catch (OptionNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals(1,service.counterRockGames());	
 	}
 	
 	@Test
 	void selecctionPlayerTwoRock() {
 		String rockSelection = "1";
-		GameResult startGame = service.startGame(rockSelection);
+		GameResult startGame = null;
+		try {
+			startGame = service.startGame(rockSelection);
+		} catch (OptionNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("ROCK",startGame.getElecionPlayerFirst());
 		assertEquals(1, service.counterRockGames());
 	}
