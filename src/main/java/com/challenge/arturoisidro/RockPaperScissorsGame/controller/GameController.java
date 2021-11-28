@@ -1,5 +1,7 @@
 package com.challenge.arturoisidro.RockPaperScissorsGame.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.challenge.arturoisidro.RockPaperScissorsGame.model.Resultado;
+import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 import com.challenge.arturoisidro.RockPaperScissorsGame.service.GameService;
 
 import io.swagger.annotations.ApiOperation;
@@ -22,12 +24,12 @@ public class GameController {
 
 	@PostMapping("/jugar/{opcion}")
 	@ApiOperation(value = "Starting the game 0- Random : 1-  Rock options", notes = "show information about the gameplay choosing and option")
-	public ResponseEntity<Resultado> realizarJugada(@PathVariable("opcion") String opcionElegida) {
-		Resultado startGame = gameService.startGame(opcionElegida);
+	public ResponseEntity<GameResult> realizarJugada(@PathVariable("opcion") String opcionElegida) {
+		GameResult startGame = gameService.startGame(opcionElegida);
 		if (startGame != null) {
 			return ResponseEntity.ok(startGame);
 		}
-		return (ResponseEntity<Resultado>) ResponseEntity.badRequest();
+		return (ResponseEntity<GameResult>) ResponseEntity.badRequest();
 	}
 
 	@PostMapping("/reset")
@@ -40,25 +42,31 @@ public class GameController {
 	@GetMapping("/jugadas")
 	@ApiOperation(value = "Show number of games played ", notes = "Show number of games played")
 	public ResponseEntity<Integer> cargarNumeroJugadas() {
-		return ResponseEntity.ok().body(gameService.counterRandomGames() + gameService.counterRockGames());
+		return ResponseEntity.ok().body(gameService.totalGames());
 	}
 
 	@GetMapping("/resultados")
 	@ApiOperation(value = "Show results of the game ", notes = "Show number of games played")
-	public String cargarResultados() {
+	public ResponseEntity<List<GameResult>> cargarResultados() {
 
-		return "n jugadas";
+		return ResponseEntity.ok(gameService.getResults());
 	}
 
-	@GetMapping("/puntosRock")
+	@GetMapping("/totalFirstPlayer")
 	@ApiOperation(value = "Show number of Rock points ", notes = "Show rock points")
 	public ResponseEntity<Integer> cargarPuntosRock() {
-		return ResponseEntity.ok().body(gameService.counterRockGames());
+		return ResponseEntity.ok().body(gameService.counterPlayerFirstWin());
 	}
 
-	@GetMapping("/puntosRandom")
+	@GetMapping("/totalSecondPlayer")
 	@ApiOperation(value = "Show number of Random points ", notes = "Show number of Random points")
 	public ResponseEntity<Integer> cargarPuntosRandom() {
-		return ResponseEntity.ok().body(gameService.counterRandomGames());
+		return ResponseEntity.ok().body(gameService.counterPlayerSecondWin());
+	}
+	
+	@GetMapping("/totalDraw")
+	@ApiOperation(value = "Show number of Random points ", notes = "Show number of Random points")
+	public ResponseEntity<Integer> cargarDraw() {
+		return ResponseEntity.ok().body(gameService.counterDraw());
 	}
 }

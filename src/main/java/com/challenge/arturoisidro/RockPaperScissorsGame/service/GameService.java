@@ -1,6 +1,8 @@
 package com.challenge.arturoisidro.RockPaperScissorsGame.service;
 
-import com.challenge.arturoisidro.RockPaperScissorsGame.model.Resultado;
+import java.util.List;
+
+import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 
 public interface GameService {
 	/**
@@ -8,7 +10,7 @@ public interface GameService {
 	 * @param opcionElegida Could be 0 - random  1 - rock option
 	 * @return Information of the match
 	 */
-	Resultado startGame(String opcionElegida);
+	GameResult startGame(String opcionElegida);
 	
 	/***
 	 * Reset the game, counter to 0 and clear memory
@@ -37,5 +39,10 @@ public interface GameService {
 	 * @return number of games
 	 */
 	int totalGames();
+	
+	int counterPlayerFirstWin();
+	int counterPlayerSecondWin();
+	int counterDraw();
+	List<GameResult>getResults();
 
 }

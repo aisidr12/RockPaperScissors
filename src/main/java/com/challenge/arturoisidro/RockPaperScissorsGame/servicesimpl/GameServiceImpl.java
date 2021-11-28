@@ -3,111 +3,58 @@ package com.challenge.arturoisidro.RockPaperScissorsGame.servicesimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import com.challenge.arturoisidro.RockPaperScissorsGame.model.Jugador;
-import com.challenge.arturoisidro.RockPaperScissorsGame.model.Prueba;
-import com.challenge.arturoisidro.RockPaperScissorsGame.model.Resultado;
+import com.challenge.arturoisidro.RockPaperScissorsGame.model.GameResult;
 import com.challenge.arturoisidro.RockPaperScissorsGame.service.GameService;
 
 @Service
 public class GameServiceImpl implements GameService {
-
-	
+	Log log = LogFactory.getLog(GameServiceImpl.class);
+	private List<GameResult> gameSession = new ArrayList<GameResult>();
 	private final String ROCK_OPTION = "1";
 	private int counter_random = 0;
 	private int counter_rock = 0;
-	private int numberGames = 0;
 	private int victoriasPrimerJugador = 1;
 	private int victoriasSegundoJugador = 1;
 	private int numperoEmpates = 1;
-	/*
-	 * Habran dos tipos de jugador uno que siempre es aleatorio y el otro que
-	 * siempre saca piedra
-	 */
+	private final  String ROCK = "ROCK";
+	private final  String PAPER = "PAPER";
+	private final  String SCISSOR = "SCISSOR";
+	private final  String DRAW = "DRAW";
 
-	/*
-	 * Si has presionado random (0) o si has presionado (Rock)
-	 */
-//	@Override  este es el bueno
-//	public Resultado startGame(String opcionElegida) {
-//		Resultado resultado = null;
-//		String shakingHand;
-//		if (ROCK_OPTION.equals(opcionElegida)) {  //1 Cuando elige el radio de solo piedra
-//			// Esta es la opcion s iempre piedra
-//			resultado = new Resultado();
-//			int jugadaPC = randomPlay(); // piedra - papel - tijera 
-//		//	shakingHand = shakingHand(Integer.parseInt(ROCK_OPTION), jugadaPC);
-//			Prueba shakingHandDetails = shakingHandDetails(Integer.parseInt(ROCK_OPTION), jugadaPC);
-//			Jugador uno = new Jugador();
-//			uno.setEleccion(numberMapper(Integer.parseInt(opcionElegida)));
-//			Jugador dos = new Jugador();
-//			dos.setEleccion(numberMapper(jugadaPC));
-//			resultado.setYou_choose(uno);		
-//			resultado.setPc_choose(dos);
-//			resultado.setResultado(shakingHand(Integer.parseInt(ROCK_OPTION), jugadaPC));			
-//			counter_rock++;
-//			//numberGames ++;
-//			return resultado;
-//		} else {							//1,2,3
-//			// Esta es la opcion random // ahora que jueguen entre ellos
-//			resultado = new Resultado();
-//			int elecionJugadorRandom = randomPlay();
-//			int jugadaPC = pcPlay();		
-//			Prueba shakingHandDetails = 	shakingHandDetails(elecionJugadorRandom, jugadaPC);
-//			Jugador uno = new Jugador();
-//			uno.setEleccion(numberMapper(elecionJugadorRandom));
-//			Jugador dos = new Jugador();
-//			dos.setEleccion(numberMapper(jugadaPC));
-//			resultado.setYou_choose(uno);
-//			resultado.setPc_choose(dos);
-//			resultado.setResultado(shakingHand(elecionJugadorRandom, jugadaPC)); 
-//			counter_random++;			
-//			return resultado;
-//		}
-//	}
+
 	
 	@Override
-	public Resultado startGame(String opcionElegida) {
-		Resultado resultado = null;
-		String shakingHand;
+	public GameResult startGame(String opcionElegida) {
+		log.info("Empezando el juego con la eleccion elegida " + opcionElegida);
 		if (ROCK_OPTION.equals(opcionElegida)) {  //1 Cuando elige el radio de solo piedra
-			// Esta es la opcion s iempre piedra
-			resultado = new Resultado();
+			log.info("Dentro de la opcion Siempre piedra");			
 			int jugadaPC = randomPlay(); // piedra - papel - tijera 
-		//	shakingHand = shakingHand(Integer.parseInt(ROCK_OPTION), jugadaPC);
-			Prueba shakingHandDetails = shakingHandDetails(Integer.parseInt(ROCK_OPTION), jugadaPC);
-			Jugador uno = new Jugador();
-			uno.setEleccion(numberMapper(Integer.parseInt(opcionElegida)));
-			Jugador dos = new Jugador();
-			dos.setEleccion(numberMapper(jugadaPC));
-			resultado.setYou_choose(uno);		
-			resultado.setPc_choose(dos);
-			resultado.setResultado(shakingHand(Integer.parseInt(ROCK_OPTION), jugadaPC));			
+			GameResult shakingHandDetails = shakingHandDetails(Integer.parseInt(ROCK_OPTION), jugadaPC);
+			gameSession.add(shakingHandDetails);
 			counter_rock++;
-			//numberGames ++;
-			return resultado;
-		} else {							//1,2,3
-			// Esta es la opcion random // ahora que jueguen entre ellos
-			resultado = new Resultado();
+			return shakingHandDetails;
+		} else {		
+			log.info("Dentro de la opción siempre random");
 			int elecionJugadorRandom = randomPlay();
-			int jugadaPC = pcPlay();		
-			Prueba shakingHandDetails = 	shakingHandDetails(elecionJugadorRandom, jugadaPC);
-			Jugador uno = new Jugador();
-			uno.setEleccion(numberMapper(elecionJugadorRandom));
-			Jugador dos = new Jugador();
-			dos.setEleccion(numberMapper(jugadaPC));
-			resultado.setYou_choose(uno);
-			resultado.setPc_choose(dos);
-			resultado.setResultado(shakingHand(elecionJugadorRandom, jugadaPC)); 
-			counter_random++;			
-			return resultado;
+			log.info("La eleccion del random es: "+ elecionJugadorRandom);
+			int jugadaPC = pcPlay();
+			log.info("La eleccion del pc es: "+ jugadaPC);
+			GameResult shakingHandDetails = shakingHandDetails(elecionJugadorRandom, jugadaPC);
+			gameSession.add(shakingHandDetails);
+			counter_random++;
+			return shakingHandDetails;
 		}
 	}
 
 
 	@Override
-	public void resetGame() {		
+	public void resetGame() {	
+		gameSession.clear();
 		counter_random = 0;
 		counter_rock = 0;
 	}
@@ -126,201 +73,111 @@ public class GameServiceImpl implements GameService {
 		return (int) Math.round(Math.random() * 2) + 1;
 	}
 
-	/***
-	 * 
-	 * @param numerChoose numero de la posición
-	 * @param pcNumber    numero aleatorio
-	 * @return
-	 */
-	private String shakingHand(final int numerChoose, final int pcNumber) {
+	protected GameResult shakingHandDetails(final int numerChoose, final int pcNumber) {
+		GameResult gameResultado = new GameResult();
 		String mensaje = "";
-
+	
 		switch (pcNumber) // 1- piedra , 2papel, 3tijera
 		{
 		case 1: // si pc elige piedra
-			System.out.println("Piedra");
+			log.info("Dentro de la eleccion de la PC: " + numberMapper(pcNumber));		
+			gameResultado.setElecionPlayerSecond(numberMapper(pcNumber));
 			switch (numerChoose) // 1,2,3
 			{
 			case 1:
-				System.out.println("Empate!");
-				mensaje = "Draw";
-
+			log.info("DRAW");
+				mensaje = DRAW;
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setDraw(numperoEmpates);
+				gameResultado.setResultadoJuego(mensaje);
+		
 				break;
 			case 2:
 				System.out.println("Usted gana!");
 				mensaje = "Player 1 wins";
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setWinPlayerFirst(victoriasPrimerJugador);
+				gameResultado.setResultadoJuego(mensaje);
 
 				break;
-			case 3:
+			case 3:			 
 				System.out.println("La computadora gana!");
 				mensaje = "Player 2 wins (PC)";
-
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setWinPlayerSecond(victoriasSegundoJugador);
+				gameResultado.setResultadoJuego(mensaje);			
 				break;
 			}
 			break;
 
 		case 2: //// si pc elige papel
-			System.out.println("Papel");
+			log.info("Dentro de la eleccion de la PC: " + numberMapper(pcNumber));		
+
+		
+			gameResultado.setElecionPlayerSecond(numberMapper(pcNumber));
+
 			switch (numerChoose) {
 			case 1:
 				System.out.println("La computadora gana!");
 				mensaje = "Player 2 wins (PC)";
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setWinPlayerSecond(victoriasSegundoJugador);
+				gameResultado.setResultadoJuego(mensaje);
 
+			
 				break;
 			case 2:
 				System.out.println("Empate!");
-				mensaje = "Draw";
+				mensaje = DRAW;
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setDraw(numperoEmpates);
+				gameResultado.setResultadoJuego(mensaje);
 
+			
 				break;
 			case 3:
 				System.out.println("Usted gana!");
 				mensaje = "Player 1 wins";
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setWinPlayerFirst(victoriasPrimerJugador);
+				gameResultado.setResultadoJuego(mensaje);
 
 				break;
 			}
 			break;
 
 		case 3: // si pc elige tijera
-			System.out.println("Tijera");
+		
+			log.info("Dentro de la eleccion de la PC :" + numberMapper(pcNumber));
+			gameResultado.setElecionPlayerSecond(numberMapper(pcNumber));
 			switch (numerChoose) {
 			case 1:
 				System.out.println("Usted gana!");
 				mensaje = "Player 1 wins";
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setWinPlayerFirst(victoriasPrimerJugador);
+				gameResultado.setResultadoJuego(mensaje);
+
 				break;
 			case 2:
 				System.out.println("La computadora gana!");
 				mensaje = "Player 2 wins (PC)";
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setWinPlayerSecond(victoriasSegundoJugador);
+				gameResultado.setResultadoJuego(mensaje);
+
 				break;
 			case 3:
 				System.out.println("Empate!");
-				mensaje = "Draw";
+				mensaje = DRAW;
+				gameResultado.setElecionPlayerFirst(numberMapper(numerChoose));
+				gameResultado.setDraw(numperoEmpates);
+				gameResultado.setResultadoJuego(mensaje);
 				break;
 			}
 		}
-		return mensaje;
+		return gameResultado;
 	}
-
-	private Prueba shakingHandDetails(final int numerChoose, final int pcNumber) {
-		Prueba prueba = new Prueba();
-		String mensaje = "";
-	
-		switch (pcNumber) // 1- piedra , 2papel, 3tijera
-		{
-		case 1: // si pc elige piedra
-			System.out.println("Piedra");			
-			prueba.setElecionPlayerSecond(numberMapper(pcNumber));
-			switch (numerChoose) // 1,2,3
-			{
-			case 1:
-				System.out.println("Empate!");
-				mensaje = "Draw";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_draw(numperoEmpates);
-				prueba.setResultadoJuego(mensaje);
-				numperoEmpates++;
-				numberGames++;
-				break;
-			case 2:
-				System.out.println("Usted gana!");
-				mensaje = "Player 1 wins";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_winPlayerFirst(victoriasPrimerJugador);
-				prueba.setResultadoJuego(mensaje);
-
-				victoriasPrimerJugador++;
-				numberGames++;
-				break;
-			case 3:
-	
-				//FIXME revisa el set
-				System.out.println("La computadora gana!");
-				mensaje = "Player 2 wins (PC)";
-				prueba.setElecionPlayerFirst(numberMapper(pcNumber));
-				prueba.setTotal_winPlayerSecond(victoriasSegundoJugador);
-				prueba.setResultadoJuego(mensaje);
-				victoriasSegundoJugador++;
-				numberGames++;
-				break;
-			}
-			break;
-
-		case 2: //// si pc elige papel
-			System.out.println("Papel");
-			prueba.setElecionPlayerSecond(numberMapper(pcNumber));
-
-			switch (numerChoose) {
-			case 1:
-				System.out.println("La computadora gana!");
-				mensaje = "Player 2 wins (PC)";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_winPlayerSecond(victoriasSegundoJugador);
-				prueba.setResultadoJuego(mensaje);
-
-				victoriasSegundoJugador++;
-				numberGames++;
-				break;
-			case 2:
-				System.out.println("Empate!");
-				mensaje = "Draw";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_draw(numperoEmpates);
-				prueba.setResultadoJuego(mensaje);
-
-				numperoEmpates++;
-				numberGames++;
-				break;
-			case 3:
-				System.out.println("Usted gana!");
-				mensaje = "Player 1 wins";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_winPlayerFirst(victoriasPrimerJugador);
-				prueba.setResultadoJuego(mensaje);
-
-				victoriasPrimerJugador++;
-				numberGames++;
-				break;
-			}
-			break;
-
-		case 3: // si pc elige tijera
-			System.out.println("Tijera");
-			prueba.setElecionPlayerSecond(numberMapper(pcNumber));
-			switch (numerChoose) {
-			case 1:
-				System.out.println("Usted gana!");
-				mensaje = "Player 1 wins";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_winPlayerFirst(victoriasPrimerJugador);
-				prueba.setResultadoJuego(mensaje);
-
-				victoriasPrimerJugador++;
-				numberGames++;
-				break;
-			case 2:
-				System.out.println("La computadora gana!");
-				mensaje = "Player 2 wins (PC)";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_winPlayerSecond(victoriasSegundoJugador);
-				prueba.setResultadoJuego(mensaje);
-
-				victoriasSegundoJugador++;
-				numberGames++;
-				break;
-			case 3:
-				System.out.println("Empate!");
-				mensaje = "Draw";
-				prueba.setElecionPlayerFirst(numberMapper(numerChoose));
-				prueba.setTotal_draw(numperoEmpates);
-				prueba.setResultadoJuego(mensaje);
-
-				numperoEmpates++;
-				numberGames++;
-				break;
-			}
-		}
-		return prueba;
-	}
-	
 	
 	
 	@Override
@@ -343,13 +200,13 @@ public class GameServiceImpl implements GameService {
 		String electionText = "";
 		switch(selection) {
 		case 1:
-			electionText = "ROCK";
+			electionText = ROCK;
 			break;
 		case 2:
-			electionText = "PAPER";
+			electionText = PAPER;
 			break;
 		case 3:
-			electionText = "SCISSORS";
+			electionText = SCISSOR;
 			break;
 		}
 		return electionText;
@@ -357,7 +214,44 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public int totalGames() {		
-		return numberGames;
+		return gameSession.size();
+	}
+
+
+	@Override
+	public int counterPlayerFirstWin() {
+		int counterPlayerOneWin = 0;
+		for (GameResult gameResult : gameSession) {
+			counterPlayerOneWin = counterPlayerOneWin + gameResult.getWinPlayerFirst() ;			
+		}
+		return counterPlayerOneWin;
+	}
+
+
+	@Override
+	public int counterPlayerSecondWin() {
+		int counterPlayerSecondWin = 0;
+		for (GameResult gameResult : gameSession) {
+			counterPlayerSecondWin = counterPlayerSecondWin + gameResult.getWinPlayerSecond() ;			
+		}
+		return counterPlayerSecondWin;
+	}
+
+
+	@Override
+	public int counterDraw() {
+		int counterDraw = 0;
+		for (GameResult gameResult : ListUtils.emptyIfNull(gameSession)) {
+			counterDraw  = counterDraw +gameResult.getDraw();
+		}
+		return counterDraw;
+	}
+
+
+	@Override
+	public List<GameResult> getResults() {
+	
+		return gameSession;
 	}
 
 }
