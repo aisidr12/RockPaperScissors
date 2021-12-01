@@ -2,10 +2,42 @@
 
 <div class="bg-dark border-right p-3" id="sidebar">
   <h3 class="text-light"> 
-hola
+>
   </h3>
 </div>
 <div>
   mundo
 </div>
 </div>
+<hr>
+<div class="row">    
+  <!-- <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedValue"  class="group">
+    <mat-radio-button *ngFor="let option of options; let i = index" [value]="option">
+      {{option}}         
+    </mat-radio-button>     
+  </mat-radio-group> -->
+
+</div>
+<div *ngFor="let option of options;index as i">
+  <input type="radio" name="gameSeleccion" value="{{option}}" (change)="radioChangeHandler($event,i)">{{option}}
+</div>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>player 1</th>
+      <th>player 2</th>
+      <th>Resultados</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let resultado of resultados">
+
+      <td>{{resultado.elecionPlayerFirst}}</td>
+      <td>{{resultado.elecionPlayerSecond}}</td>
+      <td>{{resultado.resultadoJuego}}</td>     
+    </tr>
+  </tbody>
+</table>

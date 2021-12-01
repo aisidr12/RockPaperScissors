@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.challenge.arturoisidro.RockPaperScissorsGame.service.GameService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@CrossOrigin({"http://localhost:4200"})
 @RequestMapping("RockPaperScissors")
 public class GameController {
 
@@ -58,13 +60,13 @@ public class GameController {
 	}
 
 	@GetMapping("/totalFirstPlayer")
-	@ApiOperation(value = "Show number of Rock points ", notes = "Show rock points")
+	@ApiOperation(value = "Count the number of winners of player 1", notes = "Count the number of winners of player 2")
 	public ResponseEntity<Integer> cargarPuntosRock() {
 		return ResponseEntity.ok().body(gameService.counterPlayerFirstWin());
 	}
 
 	@GetMapping("/totalSecondPlayer")
-	@ApiOperation(value = "Show number of Random points ", notes = "Show number of Random points")
+	@ApiOperation(value = "Count the number of winners of player 2", notes = "Count the number of winners of player 2")
 	public ResponseEntity<Integer> cargarPuntosRandom() {
 		return ResponseEntity.ok().body(gameService.counterPlayerSecondWin());
 	}
