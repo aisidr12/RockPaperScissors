@@ -1,0 +1,24 @@
+
+<form #myForm="ngForm" (submit)="submitForm(myForm)"  id=formulario>
+    <!-- radio Buttons -->
+    <div>
+       <input id="randomSelection" type="radio" class="custom-control-input" value="0" name="selection" ngModel required>
+       <label class="custom-control-label" for="randomSelection">Random Option</label>
+    </div>
+ 
+    <div>
+       <input id="rockSelection" type="radio" class="custom-control-input" value="1" name="selection" ngModel required>
+       <label class="custom-control-label" for="rockSelection">Rock Option</label>
+    </div>
+ 
+    <div *ngIf="isSubmitted && myForm.invalid">
+       <p>Please select either value</p>
+    </div>
+ 
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-danger btn-lg btn-block" id="buttonPlay">Play</button>
+ </form><!-- Form ends -->
+ <div class="row">
+    <p class="text-info" align="center">{{result}} </p> 
+ </div>
+

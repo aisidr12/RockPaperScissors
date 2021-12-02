@@ -1,0 +1,13 @@
+#formulario{
+margin-top: 40px;
+  text-align: center; 
+  flex-wrap: wrap;
+}
+#buttonPlay{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.p{
+    margin-top: 10px;
+}

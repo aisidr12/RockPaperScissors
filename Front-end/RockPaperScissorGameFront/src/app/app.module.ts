@@ -6,11 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule} from '@angular/common/http';
+import { FormularioComponent } from './components/formulario/formulario.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FormularioComponent
  
   ],
   imports: [

@@ -1,43 +1,70 @@
-<div class="d-flex">
-
-<div class="bg-dark border-right p-3" id="sidebar">
-  <h3 class="text-light"> 
->
-  </h3>
-</div>
-<div>
-  mundo
-</div>
-</div>
+<app-formulario></app-formulario>
 <hr>
-<div class="row">    
-  <!-- <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedValue"  class="group">
-    <mat-radio-button *ngFor="let option of options; let i = index" [value]="option">
-      {{option}}         
-    </mat-radio-button>     
-  </mat-radio-group> -->
-
+<div id="outer">
+  <div class="inner">
+    <form (ngSubmit)="mostrarListaResultados()">
+      <button class="btn-primary"> Show List Results</button>
+    </form>
+  </div>
+  <div class="inner">
+  <form (ngSubmit)="resetGame()">
+    <button class="btn-primary">Restart garme</button>
+  </form>
+  </div>
+  <div class="inner">
+  <form (ngSubmit)="getTotalPlayed()">
+    <button class="btn-primary"> Total rounds played </button>
+  </form>
+  </div>
+  <div class="inner"> 
+    <form (ngSubmit)="getCounterFirstWinner()">
+    <button class="btn-primary"> Total wins for first player</button>
+  </form>
+  </div>
+  <div class="inner">
+  <form (ngSubmit)="getCounterSecondWinner()">
+    <button class="btn-primary"> Total Wins for second player</button>
+  </form>
+  </div>
+  <div class="inner">
+  <form (ngSubmit)="getcounterDraw()">
+    <button class="btn-primary"> Total Draws</button>
+  </form>
+  </div>
 </div>
-<div *ngFor="let option of options;index as i">
-  <input type="radio" name="gameSeleccion" value="{{option}}" (change)="radioChangeHandler($event,i)">{{option}}
+
+<hr>
+<div id="roundPlayed" *ngIf="totalPlayed>0"> 
+ Total Rounds Played {{totalPlayed}}
+</div>
+<div id="WinnerFirst" *ngIf="counterPLayerFirstWin>0">
+  Total win for Firt player {{ counterPLayerFirstWin }}
+ </div>
+ <div id="WinnerFirst" *ngIf="counterPlayerSecondWin>0">
+  Total Win for second Player {{ counterPlayerSecondWin }}
+ </div>
+ <div id="totalDraw" *ngIf="counterDraw>0">
+  Total Draws {{ counterDraw }}
+ </div>
+
+<div class="row">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>player 1</th>
+        <th>player 2</th>
+        <th>Resultados</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let resultado of resultados">
+  
+        <td>{{resultado.elecionPlayerFirst}}</td>
+        <td>{{resultado.elecionPlayerSecond}}</td>
+        <td>{{resultado.resultadoJuego}}</td>     
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>player 1</th>
-      <th>player 2</th>
-      <th>Resultados</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let resultado of resultados">
-
-      <td>{{resultado.elecionPlayerFirst}}</td>
-      <td>{{resultado.elecionPlayerSecond}}</td>
-      <td>{{resultado.resultadoJuego}}</td>     
-    </tr>
-  </tbody>
-</table>

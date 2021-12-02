@@ -34,11 +34,11 @@ export class PlayService {
     return this.http.get<any>(this.baseEndpoint + "totalFirstPlayer");
   }
 
-  public getNumeroVictoriasPlayerTwo() :Observable<Number>{
+  public getNumeroVictoriasPlayerTwo() :Observable<number>{
     return this.http.get<any>(this.baseEndpoint + "totalSecondPlayer");
   }
 
- public getTotalDraw() :Observable<Number>{
+ public getTotalDraw() :Observable<number>{
   return this.http.get<any>(this.baseEndpoint + "totalDraw");
   }
 }
