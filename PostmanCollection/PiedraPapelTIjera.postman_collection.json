@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "ae178ed8-2bbf-40b7-aec0-f66c138de5b8",
+		"name": "PiedraPapelTIjera",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Play",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/jugar/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"jugar",
+						"0"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		},
+		{
+			"name": "Total played",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/jugadas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"jugadas"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		},
+		{
+			"name": "Results",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/resultados",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"resultados"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		},
+		{
+			"name": "counterPlayerFirstWin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/totalFirstPlayer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"totalFirstPlayer"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		},
+		{
+			"name": "counterPlayerSecond win",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/totalSecondPlayer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"totalSecondPlayer"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		},
+		{
+			"name": "Counter Draw",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/totalDraw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"totalDraw"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		},
+		{
+			"name": "Reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/RockPaperScissors/reset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"RockPaperScissors",
+						"reset"
+					]
+				},
+				"description": "Jugar"
+			},
+			"response": []
+		}
+	]
+}
