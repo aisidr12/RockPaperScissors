@@ -4,7 +4,9 @@ This is a Lottoland Challenge.
 
 Backend developed with JAVA 8- Git.
 Inside of the main branch which is Master you install the project with mvn clean install to download some dependencies. I tried to use few dependencies.
+
 we develop Junit test for the services.
+for backend we tried to use Clean code.
  
  The main endpoint is : http://localhost:8080/RockPaperScissors/
  
